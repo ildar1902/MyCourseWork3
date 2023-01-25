@@ -25,6 +25,7 @@ public class StoreService {
             socks.put(sockProduct.getSock(), sockProduct.getQuantity());
         }
     }
+
     public void release(SockProduct sockProduct) {
         Sock sock = sockProduct.getSock();
         int difference = socks.get(sock) - sockProduct.getQuantity();
