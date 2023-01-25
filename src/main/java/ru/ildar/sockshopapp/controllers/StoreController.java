@@ -44,4 +44,22 @@ public class StoreController {
         storeService.release(sockProduct);
         return ResponseEntity.ok().build();
     }
+
+    @Operation(summary = "Возврат общего кол-ва носков на складе",
+            description = "Возвращает общее кол-во носков на складе, соответствующих переданным в параметрах критериям запроса")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200",
+                    description = "запрос выполнен, результат в теле ответа в виде строкового представления целого числа"),
+            @ApiResponse(responseCode = "400",
+                    description = "параметры запроса отсутствуют или имеют некорректный формат"),
+            @ApiResponse(responseCode = "500",
+                    description = "произошла ошибка, не зависящая от вызывающей стороны")})
+    @GetMapping
+    public ResponseEntity<Integer> getCount(@RequestParam String color,
+                                            @RequestParam int size,
+                                            @RequestParam(required = false, defaultValue = "0") int cottonMin,
+                                            @RequestParam(required = false, defaultValue = "100") int cottonMax) {
+        int available = storeService.getCount(color, size, cottonMin, cottonMax);
+        return ResponseEntity.ok(available);
+    }
 }
